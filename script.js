@@ -22,40 +22,75 @@ function playRound(playerSelection, computerSelection) {
     p = playerSelection.toLowerCase();
 
     if(p === computerSelection) {
-        return "You both chose " + p + ". It's a tie.";
+        return "0You both chose " + p + ". It's a tie.";
     }
 
-    switch(computerSelection) {
+    switch(p) {
         case "rock":
-            if(p === "paper") {
-                return "You win! Paper beats rock.";
+            if(computerSelection === "paper") {
+                return "2You lose! Rock loses to paper.";
             }
             else {
-                return "You lose! Rock beats scissors.";
+                return "1You win! Rock beats scissors.";
             }
         
         case "paper":
-            if(p === "scissors") {
-                return "You win! Scissors beats paper.";
+            if(computerSelection === "scissors") {
+                return "2You lose! Paper loses to scissors.";
             }
             else {
-                return "You lose! Paper beats rock.";
+                return "1You win! Paper beats rock.";
             }
 
         case "scissors":
-            if(p === "rock") {
-                return "You win! Rock beats scissors.";
+            if(computerSelection === "rock") {
+                return "2You lose! Scissors loses to rock.";
             }
             else {
-                return "You lose! Scissors beats paper.";
+                return "1You win! Scissors beats paper.";
             }
 
         default:
-            return "You lose! " + playerSelection + " loses to " + computerSelection + ".";
+            return "2You lose! " + playerSelection + " loses to " + computerSelection + ".";
     }
 }
 
 //Has the player play 5 rounds of the game and keeps score to report who won based on the best of 5
 function game() {
+    let results = [0, 0, 0];
 
+    for(let i = 0; i < 5; i++) {
+        message = playRound(prompt("Rock? Paper? Scissors?"), getComputerChoice());
+        
+        console.log(message.slice(1));
+
+        switch(message.slice(0,1)) {
+            case "0":
+                results[0] = (results[0] + 1);
+                break;
+            
+            case "1":
+                results[1] = (results[1] + 1);
+                break;
+
+            case "2":
+                results[2] = (results[2] + 1);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    if(results[1] < results[2]) {
+        console.log("Overall, you lose! Record [tie, win, loss]: " + results);
+    }
+    else if(results[1] === results[2]) {
+        console.log("Overall, you tie! Record [tie, win, loss]: " + results);
+    }
+    else {
+        console.log("Overall, you win! Record [tie, win, loss]: " + results);
+    }
 }
+
+game()
